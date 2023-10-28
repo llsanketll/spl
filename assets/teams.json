@@ -1,0 +1,123 @@
+[
+  {
+    "id": 1,
+    "name": "Arsenal",
+    "short": "ARS",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/5/53/Arsenal_FC.svg/800px-Arsenal_FC.svg.png"
+  },
+  {
+    "id": 2,
+    "name": "Aston Villa",
+    "short": "AVL",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/9/9f/Aston_Villa_logo.svg/800px-Aston_Villa_logo.svg.png"
+  },
+  {
+    "id": 3,
+    "name": "Bournemout",
+    "short": "BOU",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/e/e5/AFC_Bournemouth_%282013%29.svg/800px-AFC_Bournemouth_%282013%29.svg.png?20210117155748"
+  },
+  {
+    "id": 4,
+    "name": "Brentford",
+    "short": "BRE",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/2/2a/Brentford_FC_crest.svg/800px-Brentford_FC_crest.svg.png"
+  },
+  {
+    "id": 5,
+    "name": "Brighton",
+    "short": "BHA",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/f/fd/Brighton_%26_Hove_Albion_logo.svg/800px-Brighton_%26_Hove_Albion_logo.svg.png"
+  },
+  {
+    "id": 6,
+    "name": "Burnley",
+    "short": "BUR",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/6/6d/Burnley_FC_Logo.svg/417px-Burnley_FC_Logo.svg.png"
+  },
+  {
+    "id": 7,
+    "name": "Chelsea",
+    "short": "CHE",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/c/cc/Chelsea_FC.svg/1200px-Chelsea_FC.svg.png"
+  },
+  {
+    "id": 8,
+    "name": "Crystal Palace",
+    "short": "CRY",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/a/a2/Crystal_Palace_FC_logo_%282022%29.svg/384px-Crystal_Palace_FC_logo_%282022%29.svg.png"
+  },
+  {
+    "id": 9,
+    "name": "Everton",
+    "short": "EVE",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/7/7c/Everton_FC_logo.svg/469px-Everton_FC_logo.svg.png"
+  },
+  {
+    "id": 10,
+    "name": "Fulham",
+    "short": "FUL",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/e/eb/Fulham_FC_%28shield%29.svg/225px-Fulham_FC_%28shield%29.svg.png"
+  },
+  {
+    "id": 11,
+    "name": "Liverpool",
+    "short": "LIV",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/0/0c/Liverpool_FC.svg/351px-Liverpool_FC.svg.png"
+  },
+  {
+    "id": 12,
+    "name": "Luton Town",
+    "short": "LUT",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/9/9d/Luton_Town_logo.svg/640px-Luton_Town_logo.svg.png"
+  },
+  {
+    "id": 13,
+    "name": "Man City",
+    "short": "MCI",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/e/eb/Manchester_City_FC_badge.svg/480px-Manchester_City_FC_badge.svg.png"
+  },
+  {
+    "id": 14,
+    "name": "Man Utd",
+    "short": "MUN",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/7/7a/Manchester_United_FC_crest.svg/474px-Manchester_United_FC_crest.svg.png"
+  },
+  {
+    "id": 15,
+    "name": "Newcastle",
+    "short": "NEW",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/5/56/Newcastle_United_Logo.svg/477px-Newcastle_United_Logo.svg.png"
+  },
+  {
+    "id": 16,
+    "name": "Nott'm Forest ",
+    "short": "NOT",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/e/e5/Nottingham_Forest_F.C._logo.svg/225px-Nottingham_Forest_F.C._logo.svg.png"
+  },
+  {
+    "id": 17,
+    "name": "Sheffield Utd",
+    "short": "SHU",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/9/9c/Sheffield_United_FC_logo.svg/480px-Sheffield_United_FC_logo.svg.png"
+  },
+  {
+    "id": 18,
+    "name": "Spurs",
+    "short": "TOT",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/b/b4/Tottenham_Hotspur.svg/233px-Tottenham_Hotspur.svg.png"
+  },
+
+  {
+    "id": 19,
+    "name": "West Ham",
+    "short": "WHU",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/c/c2/West_Ham_United_FC_logo.svg/431px-West_Ham_United_FC_logo.svg.png"
+  },
+  {
+    "id": 20,
+    "name": "Wolves",
+    "short": "WOL",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/f/fc/Wolverhampton_Wanderers.svg/480px-Wolverhampton_Wanderers.svg.png"
+  }
+]
