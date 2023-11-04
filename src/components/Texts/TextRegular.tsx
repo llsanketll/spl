@@ -5,14 +5,10 @@ import type { TextProps } from "react-native";
 export type CustomTextProps = TextProps & {
   size?: number;
   color?: string;
+  center?: boolean;
 };
 
-const TextRegular = ({
-  size = 16,
-  color,
-  children,
-  ...props
-}: CustomTextProps) => {
+const TextRegular = ({ size = 16, color, children, ...props }: CustomTextProps) => {
   return (
     <Text
       style={{

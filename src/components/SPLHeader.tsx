@@ -1,15 +1,27 @@
-import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import React, { useEffect } from "react";
+import { StyleSheet, View } from "react-native";
 import TextBold from "./Texts/TextBold";
-import { Ionicons } from "@expo/vector-icons";
+import TextRegular from "./Texts/TextRegular";
+import { useGlobalContext } from "./Global/GlobalContext";
 
-export default function SPLHeader() {
+type SPLHeaderProps = {
+  name: string;
+};
+
+export default function SPLHeader(props: SPLHeaderProps) {
+  const { points } = useGlobalContext();
+
   return (
     <View style={styles.container}>
       <TextBold size={20} color="white">
-        Fixtures
+        {props.name}
       </TextBold>
-      <Ionicons name="football" size={24} color="white" />
+      <View style={styles.pointContainer}>
+        <TextRegular color="white">Points : </TextRegular>
+        <TextBold size={20} color="white">
+          {points}
+        </TextBold>
+      </View>
     </View>
   );
 }
@@ -22,5 +34,13 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     paddingBottom: 10,
     backgroundColor: "#516bfa",
+  },
+  pointContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#6f87ff",
+    paddingHorizontal: 20,
+    borderRadius: 5,
   },
 });

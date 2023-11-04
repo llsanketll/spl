@@ -1,139 +1,184 @@
 import SPLFooter from "@/components/SPLFooter";
-import SPLHeader from "@/components/SPLHeader";
 import { StatusBar } from "expo-status-bar";
-import {
-  Button,
-  FlatList,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import type { StackScreenProps } from "@/types/route_types";
 import TextSemi from "@/components/Texts/TextSemi";
-import MatchCard, { MatchCardProps } from "@/components/MatchCard";
 import { useState, useEffect } from "react";
 import { AntDesign } from "@expo/vector-icons";
-import { Entypo } from "@expo/vector-icons";
+import EditButton from "@/components/EditButton";
+import { collection, getDocs } from "firebase/firestore";
+import { auth, db } from "firebase.config";
+import SPLHeader from "@/components/SPLHeader";
+import { useGlobalContext } from "@/components/Global/GlobalContext";
+import FixtureList from "@/components/FixtureList";
+import LoadingCard from "@/components/MatchCard/LoadingCard";
+import { MatchCardProps } from "@/components/MatchCard/MatchCard";
 
-export default function HomeScreen({ navigation }: StackScreenProps<"Home">) {
+export default function HomeScreen(props: StackScreenProps<"Home">) {
+  const { isLoading, setIsLoading } = useGlobalContext();
   const [fixtureData, setFixtureData] = useState<MatchCardProps[]>([]);
-  const [gameWeek, setGameWeek] = useState(1);
-  const [currentWeek, setCurrentWeek] = useState(10);
-  const [isEditMode, setIsEditMode] = useState(false);
+  const [predictions, setPredictions] = useState<[string, string][]>(Array(10).fill(["0", "0"]));
+  const { gameWeek, setGameWeek } = useGlobalContext();
+  const { currentWeek, setCurrentWeek } = useGlobalContext();
+  const { setIsEditMode } = useGlobalContext();
+  const { setCanUpload } = useGlobalContext();
+  const { setPoints } = useGlobalContext();
+
+  const UploadPrediction = async () => {
+    setCanUpload(true);
+    setIsEditMode(false);
+  };
+
+  const GetTeamData = async () => {
+    try {
+      const res = await fetch("https://fantasy.premierleague.com/api/bootstrap-static/");
+      const teamData = await res.json();
+      return teamData;
+    } catch (error) {
+      console.log("Error Getting Team Data: ", error);
+      throw error;
+    }
+  };
 
   const GetCurrentGameWeek = async () => {
     try {
-      const res = await fetch(
-        "https://fantasy.premierleague.com/api/bootstrap-static/"
-      );
+      let currentWeek = 1;
+      const res = await fetch("https://fantasy.premierleague.com/api/bootstrap-static/");
       const teamData = await res.json();
-      let currentWeek = teamData.events[0].id;
       teamData.events.forEach((item: any) => {
         if (item.is_current) currentWeek = item.id;
       });
-      setCurrentWeek(currentWeek);
-      setGameWeek(currentWeek);
+      return currentWeek;
     } catch (error) {
-      return 1;
+      throw error;
     }
   };
 
-  const GetFixtureData = async () => {
+  const GetFixtureData = async (gw: number) => {
     try {
-      const response = await fetch(
-        "https://fantasy.premierleague.com/api/fixtures/?event=" + gameWeek
-      );
+      const response = await fetch("https://fantasy.premierleague.com/api/fixtures/?event=" + gw);
       const json = await response.json();
-      return json;
+      const teamData = await GetTeamData();
+      const newData: MatchCardProps[] = json.map((item: any, index: number) => ({
+        gameNumber: index,
+        homeTeam: item.team_h,
+        awayTeam: item.team_a,
+        isCurrent: item.is_current,
+        kickoffTime: item.kickoff_time,
+        score: [item.team_h_score, item.team_a_score],
+        teamData: teamData.teams,
+      }));
+      return newData;
     } catch (error) {
-      console.log(error);
+      console.log("Error Getting Data: ", error);
+      throw error;
     }
+  };
+
+  const GetPredictions = async (gw: number) => {
+    try {
+      let weekPredictions: [string, string][] = [];
+      const querySnapshot = await getDocs(
+        collection(db, `users/${auth.currentUser?.uid}/gameweeks/gw${gw}/predictions`)
+      );
+      if (!querySnapshot.empty)
+        querySnapshot.forEach(doc => {
+          weekPredictions.push(doc.data()?.prediction);
+        });
+      else weekPredictions = Array(fixtureData.length).fill(["0", "0"]);
+      return weekPredictions;
+    } catch (error) {
+      console.log("Error Getting Predictions: ", error);
+      throw error;
+    }
+  };
+
+  const SetGameWeekData = async (newGameWeek: number) => {
+    setGameWeek(newGameWeek);
+    try {
+      const newFixture = await GetFixtureData(newGameWeek);
+      setFixtureData(newFixture);
+
+      const newPredictions = await GetPredictions(newGameWeek);
+      setPredictions(newPredictions);
+    } catch (error) {
+      console.log("Error: ", error);
+      throw error;
+    }
+  };
+
+  const CalculateGWPoints = async (gw: number) => {
+    let points = 0;
+    const querySnapshot = await getDocs(
+      collection(db, `users/${auth.currentUser?.uid}/gameweeks/gw${gw}/predictions`)
+    );
+    if (!querySnapshot.empty)
+      querySnapshot.forEach(doc => {
+        points += doc.data()?.point;
+      });
+    setPoints(points);
   };
 
   useEffect(() => {
-    GetCurrentGameWeek();
+    GetCurrentGameWeek()
+      .then(currWeek => {
+        setCurrentWeek(currWeek);
+        SetGameWeekData(currWeek).then(() => {
+          CalculateGWPoints(currWeek);
+          setIsLoading(false);
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }, []);
 
-  useEffect(() => {
-    fetch("https://fantasy.premierleague.com/api/bootstrap-static/").then(
-      res => {
-        res.json().then(teamData => {
-          GetFixtureData().then(data => {
-            const newData: MatchCardProps[] = data.map((item: any) => ({
-              homeTeam: item.team_h,
-              awayTeam: item.team_a,
-              isCurrent: item.is_current,
-              kickoffTime: item.kickoff_time,
-              score: [item.team_h_score, item.team_a_score],
-              teamData: teamData.teams,
-            }));
-            setFixtureData([...newData]);
-          });
-        });
-      }
-    );
-  }, [gameWeek]);
-
-  const RenderEditButton = () => {
-    if (gameWeek > currentWeek) {
-      if (isEditMode !== true)
-        return (
-          <TouchableOpacity
-            style={styles.editButton}
-            onPress={() => setIsEditMode(true)}>
-            <Entypo name="pencil" size={24} color="white" />
-          </TouchableOpacity>
-        );
-      else
-        return (
-          <TouchableOpacity
-            style={styles.checkButton}
-            onPress={() => setIsEditMode(false)}>
-            <Entypo name="check" size={24} color="white" />
-          </TouchableOpacity>
-        );
-    } else return null;
-  };
-  const ChangeGameWeek = (increment: number) => {
+  const OnGameWeekChange = async (increment: number) => {
+    setIsLoading(true);
+    setPoints(0);
+    const newGameWeek = gameWeek + increment;
     setIsEditMode(false);
-    setGameWeek(gameWeek + increment);
+
+    await SetGameWeekData(newGameWeek);
+    await CalculateGWPoints(newGameWeek);
+    setIsLoading(false);
   };
+
   return (
     <>
-      <SPLHeader />
+      <SPLHeader name="zolt" />
       <View style={styles.container}>
-        {RenderEditButton()}
+        <EditButton UploadPrediction={UploadPrediction} />
         <View style={styles.gameweekContainer}>
           <TouchableOpacity
-            style={styles.arrowContainer}
-            onPress={() => ChangeGameWeek(-1)}>
+            style={gameWeek === 1 ? styles.arrowContainerDisabled : styles.arrowContainer}
+            disabled={gameWeek === 1}
+            onPress={() => OnGameWeekChange(-1)}>
             <AntDesign name="arrowleft" size={24} color="white" />
           </TouchableOpacity>
           <TextSemi>{`️  Game Week ${gameWeek}`}</TextSemi>
           <TouchableOpacity
-            style={styles.arrowContainer}
-            onPress={() => ChangeGameWeek(1)}>
+            style={
+              gameWeek === currentWeek + 1 ? styles.arrowContainerDisabled : styles.arrowContainer
+            }
+            disabled={gameWeek === currentWeek + 1}
+            onPress={() => OnGameWeekChange(1)}>
             <AntDesign name="arrowright" size={24} color="white" />
           </TouchableOpacity>
         </View>
-        <FlatList
-          style={styles.cardContainer}
-          data={fixtureData}
-          renderItem={({ item }) => (
-            <MatchCard
-              homeTeam={item.homeTeam}
-              awayTeam={item.awayTeam}
-              isCurrent={item.isCurrent}
-              kickoffTime={item.kickoffTime}
-              score={[item.score[0], item.score[1]]}
-              isEditMode={isEditMode}
-              teamData={item.teamData}
-            />
-          )}></FlatList>
-        <StatusBar style="auto" />
+        {isLoading ? (
+          <View style={{ flex: 1, marginTop: 10, paddingBottom: 20, marginBottom: 60 }}>
+            {Array.from(Array(6).keys()).map((item, index) => (
+              <LoadingCard key={index} />
+            ))}
+          </View>
+        ) : (
+          <FixtureList fixtureData={fixtureData} predictions={predictions} />
+        )}
+
+        {/* <StatusBar style="auto" /> */}
       </View>
-      <SPLFooter />
+      <SPLFooter {...props} />
     </>
   );
 }
@@ -143,42 +188,16 @@ const styles = StyleSheet.create({
     padding: 20,
     position: "relative",
   },
-  cardContainer: {
-    flex: 1,
-    marginTop: 20,
-    paddingBottom: 20,
-    marginBottom: 60,
-  },
+
   arrowContainer: {
     padding: 10,
     borderRadius: 10,
     backgroundColor: "#506BFA",
   },
-  editButton: {
-    position: "absolute",
-    height: 50,
-    width: 50,
-    bottom: 100,
-    right: 20,
-    alignItems: "center",
-    justifyContent: "center",
-    zIndex: 1,
+  arrowContainerDisabled: {
     padding: 10,
     borderRadius: 10,
-    backgroundColor: "#506BFA",
-  },
-  checkButton: {
-    position: "absolute",
-    height: 50,
-    width: 50,
-    bottom: 100,
-    right: 20,
-    alignItems: "center",
-    justifyContent: "center",
-    zIndex: 1,
-    padding: 10,
-    borderRadius: 10,
-    backgroundColor: "#03C988",
+    backgroundColor: "gray",
   },
   gameweekContainer: {
     flexDirection: "row",

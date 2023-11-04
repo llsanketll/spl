@@ -6,6 +6,7 @@ import { CustomTextProps } from "./TextRegular";
 export default function TextBold({
   size = 16,
   color,
+  center,
   children,
   ...props
 }: CustomTextProps) {
@@ -15,6 +16,8 @@ export default function TextBold({
         fontSize: size,
         fontFamily: "Poppins Bold",
         color: color,
+        textAlign: center ? "center" : "left",
+        textAlignVertical: center ? "center" : "auto",
       }}
       {...props}>
       {children}

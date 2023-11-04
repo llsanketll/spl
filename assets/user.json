@@ -1,0 +1,21 @@
+{
+  "_redirectEventId": "undefined",
+  "apiKey": "AIzaSyA_g-VV6b73nZggIrs8TzYeTHngETogGfY",
+  "appName": "[DEFAULT]",
+  "createdAt": "1698518221825",
+  "displayName": "undefined",
+  "email": "sank.lamsal@gmail.com",
+  "emailVerified": false,
+  "isAnonymous": false,
+  "lastLoginAt": "1698518221825",
+  "phoneNumber": "undefined",
+  "photoURL": "undefined",
+  "providerData": [["Object"]],
+  "stsTokenManager": {
+    "accessToken": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjBkMGU4NmJkNjQ3NDBjYWQyNDc1NjI4ZGEyZWM0OTZkZjUyYWRiNWQiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vcHJvamVjdHNwbCIsImF1ZCI6InByb2plY3RzcGwiLCJhdXRoX3RpbWUiOjE2OTg1MTgyMjIsInVzZXJfaWQiOiJ5UEFneVNqSWxLTW9iTEZKVEZoQ2dnaTgwT2wyIiwic3ViIjoieVBBZ3lTaklsS01vYkxGSlRGaENnZ2k4ME9sMiIsImlhdCI6MTY5ODUxODIyMiwiZXhwIjoxNjk4NTIxODIyLCJlbWFpbCI6InNhbmsubGFtc2FsQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJzYW5rLmxhbXNhbEBnbWFpbC5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.XJzsDVMHVZXZiV6QtZ9Ku4VzhnzFrHIneUDI23qcDZG1HQeZ2YH4OVtXTUAK2XH3lXSy9n1kI3Z1SPW1363ndaJDf4z1Lbf_muEObuwroBYNe71b8jLynk9SG8LZQZ8lVYNOO4Jg-gSEjUYYWhuSQ83huvffY8JNR-gKs2NowEZqjQdAudip2cuQ3jg4jEWA0ANnEMV9CURQ8WliwOYpQ8LxaRwdDMRzG9IdCRRsYcr6ue4ihOCEQDWUSTomQmcxDzgNqRXtVUfGyvOta8clMhznH8eOYvhGvO3OL8-A0ffJ7dl0kQN80EkAYM7YcCsjYQvb6jy84QkdCi4b_h0QRg",
+    "expirationTime": 1698521821977,
+    "refreshToken": "AMf-vBwU98RblPue8Pr7Rg_BsE6Uw8_3zPboUbF4HsyZi-aPRnd56a5kCG7U3iPMwsHTruplbYxCTu-QWfTkyXYGoYbfpsSLd81jzuzPhj_Nxg20Qf8zCeU5Xx9u10I4JmfIaE9W3K8Rl0xE8z5xLFgWlgeqXe37ZZfRNBWOXSJ23VwSWm_Ja-u1C-oYG6RkDC7RP4syVHji"
+  },
+  "tenantId": "undefined",
+  "uid": "yPAgySjIlKMobLFJTFhCggi80Ol2"
+}

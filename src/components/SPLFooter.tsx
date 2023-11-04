@@ -1,26 +1,36 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import TextRegular from "./Texts/TextRegular";
+import { StackScreenProps } from "@/types/route_types";
+import { auth } from "firebase.config";
 
-export default function SPLFooter() {
+export default function SPLFooter({
+  navigation,
+}: StackScreenProps<"Home"> | StackScreenProps<"LeaderBoard"> | StackScreenProps<"Profile">) {
+  const GoToProfile = () => {
+    navigation.navigate("Profile", { userID: auth.currentUser?.uid || "" });
+  };
+  const GoToLeaderboard = () => {
+    navigation.navigate("LeaderBoard");
+  };
   return (
     <View style={styles.container}>
       <View style={styles.iconContainer}>
         <FontAwesome5 name="calendar-alt" size={24} color="#516bfa" />
         <TextRegular color="#516bfa">Fixtures</TextRegular>
       </View>
-      <View style={styles.iconContainer}>
+      <TouchableOpacity style={styles.iconContainer} onPress={GoToLeaderboard}>
         <MaterialIcons name="leaderboard" size={24} color="gray" />
         <TextRegular color="gray">Leaderboard</TextRegular>
-      </View>
-      <View style={styles.iconContainer}>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.iconContainer} onPress={GoToProfile}>
         <Ionicons name="person" size={24} color="gray" />
         <TextRegular color="gray">Profile</TextRegular>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 }
